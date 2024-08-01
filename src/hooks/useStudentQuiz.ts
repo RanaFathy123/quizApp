@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { axiosInstanceWithHeaders } from "../axiosConfig/axiosInstace";
 import { toast } from "react-toastify";
+import { axiosInstanceWithHeaders } from "../axiosConfig/axiosInstace";
 
 const useStudentQuiz = () => {
   const [showJoinQuiz, setShowJoinQuiz] = useState(false);
+
   const handleOpenJoinQuiz = () => {
     setShowJoinQuiz(true);
   };
@@ -13,7 +14,9 @@ const useStudentQuiz = () => {
       const response = await axiosInstanceWithHeaders.post("/quiz/join", data);
       console.log(response);
       toast.success(response.data.message);
+   
       setShowJoinQuiz(false);
+  
     } catch (err) {
       console.log(err);
       toast.error("Please Fill Code");

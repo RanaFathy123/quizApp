@@ -13,6 +13,7 @@ import {
 } from "@headlessui/react";
 import { CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useForm } from "react-hook-form";
+import Loading from "../../../SharedModules/components/Loading/Loading";
 
 const QuizData = () => {
   const [quizData, setQuizData] = useState<any>(null);
@@ -71,28 +72,7 @@ const QuizData = () => {
   if (!quizData) {
     return (
       <div className="w-full flex justify-center items-center h-96">
-        <div className="flex flex-col justify-center items-center">
-          <svg
-            className="animate-spin h-10 w-10 text-gray-600 mb-4"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="4"
-            ></circle>
-            <path
-              className="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8v8H4z"
-            ></path>
-          </svg>
-        </div>
+        <Loading />
       </div>
     );
   }
@@ -109,7 +89,7 @@ const QuizData = () => {
                   <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                     <div className="sm:flex sm:items-start border-b border-gray-400">
                       <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left flex-grow">
-                        <h3>Edit  {quizData?.title}</h3>
+                        <h3>Edit {quizData?.title}</h3>
                       </div>
                       <div className="flex items-center space-x-2">
                         <button

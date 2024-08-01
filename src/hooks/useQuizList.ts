@@ -12,9 +12,9 @@ const useQuizList = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [outPutDate, setOutPutDate] = useState("");
   const [showModal, setShowModal] = useState(false);
-
   const [quizCode, setQuizCode] = useState("");
   const [showQuizCodeModal, setShowQuizCodeModal] = useState(false);
+
   const datePickerRef = useRef<any>(null);
   const { loginData } = useSelector((state: any) => state.login);
   const { groups } = useSelector((state: any) => state.groupsData);
@@ -58,7 +58,17 @@ const useQuizList = () => {
   const handleClose = () => {
     setShowModal(false);
   };
-
+  const getUpCommingQuiz = async () => {
+    try {
+      const response = await axiosInstanceWithHeaders.get("/quiz/incomming");
+      const upCommingQuiz = response.data;
+      const reversedUpCommingQuiz = upCommingQuiz.reverse()
+      console.log(reversedUpCommingQuiz);
+      setUpCommingQuiz(upCommingQuiz);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const onSubmit = async (data: any) => {
     if (selectedDate ) {
       try {
@@ -71,6 +81,7 @@ const useQuizList = () => {
         setQuizCode(quizCode);
         setShowModal(false);
         setShowQuizCodeModal(true);
+        getUpCommingQuiz()
       } catch (err: any) {
         toast.error(err.response.data.message[0]);
         console.log(err);
@@ -79,18 +90,7 @@ const useQuizList = () => {
       toast.error("schadule is requried");
     }
   };
-  const getUpCommingQuiz = async () => {
-    try {
-      const response = await axiosInstanceWithHeaders.get("/quiz/incomming");
-      const upCommingQuiz = response.data;
-      const reversedUpCommingQuiz = upCommingQuiz.reverse()
-      console.log(reversedUpCommingQuiz);
-      
-      setUpCommingQuiz(upCommingQuiz);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+
 
   useEffect(() => {
     getCompletedQuizes();
@@ -120,6 +120,7 @@ const useQuizList = () => {
     setSelectedDate,
     onSubmit,
     upCommingQuiz,
+    getUpCommingQuiz
   };
 };
 
